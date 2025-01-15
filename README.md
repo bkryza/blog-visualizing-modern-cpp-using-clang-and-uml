@@ -2,15 +2,15 @@
 
 This repository contains sample code for my blog post:
 
-* [Visualizing modern C++ using Clang and UML]()
+* [Visualizing modern C++ using Clang and UML](https://blog.bkryza.com/posts/generating-uml-diagrams-from-moderncpp-using-clang/#visualizing-component-dependencies)
 
 # Running examples
 
 ```
-git clone https://github.com/bkryza/
+git clone https://github.com/bkryza/blog-visualizing-modern-cpp-using-clang-and-uml
 cd 
 # Adjust paths to your Clang compiler (necessary for C++20 modules examples)
-CC=/usr/bin/clang-18 CXX=/usr/bin/clang++-18 cmake -DLLVM_VERSION=18 -DCMAKE_GENERATOR=Ninja -S . -B debug
+CC=/usr/bin/clang-19 CXX=/usr/bin/clang++-19 cmake -DLLVM_VERSION=19 -DCMAKE_GENERATOR=Ninja -S . -B debug
 cmake --build debug
 clang-uml -p
 plantuml -tsvg diagrams/*.puml
