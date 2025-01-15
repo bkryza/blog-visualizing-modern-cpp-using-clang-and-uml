@@ -1,0 +1,234 @@
+compilation_database_dir: debug
+output_directory: diagrams
+add_compile_flags:
+  - -fparse-all-comments
+generate_links:
+  link: 'https://github.com/bkryza/blog-visualizing-cpp-using-uml/blob/{{ git.commit }}/{{ element.source.path }}#L{{ element.source.line }}'
+  tooltip: '{% if "comment" in element %}{{ abbrv(trim(replace(element.comment.formatted, "\n+", " ")), 256) }}{% else %}{{ element.name }}{% endif %}'
+plantuml:
+  before:
+    - skinparam shadowing false
+diagrams:
+  basic_example:
+    type: class
+    title: Basic class diagram example
+    glob:
+      - basic_example.cpp
+    using_namespace: basic_class
+  basic_example_with_comments:
+    type: class
+    title: Basic class diagram example
+    comment_parser: clang
+    glob:
+      - basic_example.cpp
+    using_namespace: basic_class
+    plantuml:
+      after:
+        - '{% set e=element("A") %} note left of {{ e.alias }} : {{ trim(e.comment.brief.0) }}'
+        - '{% set e=element("basic_class::B") %} note top of {{ e.alias }} : {{ trim(e.comment.brief.0) }}'
+        - |
+          note right of {{ alias("D") }}
+              {{ comment("D").text }}
+          end note
+  smart_pointer_relationships_with_std:
+    type: class
+    glob:
+      - smart_pointer_relationships.cpp
+    using_namespace: smart_pointers
+  smart_pointer_relationships:
+    type: class
+    glob:
+      - smart_pointer_relationships.cpp
+    using_namespace: smart_pointers
+    include:
+      namespaces:
+        - smart_pointers
+  nonvirtual_visitor_pattern:
+    type: class
+    glob:
+      - nonvirtual_visitor_pattern.cpp
+    using_namespace: nonvirtual_visitor_pattern
+    include:
+      namespaces:
+        - nonvirtual_visitor_pattern
+  decl_ids:
+    type: class
+    title: Declaration ids test
+    glob:
+      - decl_ids1.cpp
+      - decl_ids2.cpp
+    using_namespace: decl_ids
+  template_specializations:
+    type: class
+    glob:
+      - template_specializations.cpp
+    using_namespace: template_specializations
+    include:
+      namespaces:
+        - template_specializations
+  concepts:
+    type: class
+    glob:
+      - concepts.cpp
+    using_namespace: concepts
+    include:
+      namespaces:
+        - concepts
+  basic_sequence:
+    type: sequence
+    glob:
+      - basic_sequence.cpp
+    using_namespace: basic_sequence
+    include:
+      namespaces:
+        - basic_sequence
+    from:
+      - function: "basic_sequence::tmain()"
+  factorial_sequence:
+    type: sequence
+    glob:
+      - factorial_sequence.cpp
+    using_namespace: factorial_sequence
+    include:
+      namespaces:
+        - factorial_sequence
+    from:
+      - function: "factorial_sequence::tmain()"
+  type_list_class:
+    type: class
+    glob:
+      - type_list.cpp
+    using_namespace: type_list
+    include:
+      namespaces:
+        - type_list
+  type_list_sequence:
+    type: sequence
+    glob:
+      - type_list.cpp
+    using_namespace: type_list
+    include:
+      namespaces:
+        - type_list
+    from:
+      - function: "type_list::tmain()"
+  nonvirtual_visitor_pattern_sequence:
+    type: sequence
+    glob:
+      - nonvirtual_visitor_pattern.cpp
+    using_namespace: nonvirtual_visitor_pattern
+    include:
+      namespaces:
+        - nonvirtual_visitor_pattern
+    from:
+      - function: "nonvirtual_visitor_pattern::tmain()"
+  recursive_list_class:
+    type: class
+    glob:
+      - recursive_list.cpp
+    using_namespace: recursive_list
+    include:
+      namespaces:
+        - recursive_list
+  recursive_list_sequence:
+    type: sequence
+    glob:
+      - recursive_list.cpp
+    using_namespace: recursive_list
+    generate_condition_statements: true
+    include:
+      namespaces:
+        - recursive_list
+    from:
+      - function: "recursive_list::tmain()"
+  variadic_print:
+    type: sequence
+    glob:
+      - variadic_print.cpp
+    using_namespace: variadic_print
+    include:
+      namespaces:
+        - variadic_print
+    from:
+      - function: "variadic_print::tmain()"
+  advanced_sequence:
+      type: sequence
+      glob:
+        - advanced_sequence.cpp
+      include:
+        namespaces:
+          - advanced_sequence
+      exclude:
+        access:
+          - private
+      using_namespace: advanced_sequence
+      from:
+        - function: advanced_sequence::tmain()
+      generate_message_comments: true
+      generate_condition_statements: true
+      participants_order:
+        - advanced_sequence::tmain()
+        - advanced_sequence::Encoder<advanced_sequence::Retrier<advanced_sequence::ConnectionPool>>
+        - advanced_sequence::Retrier<advanced_sequence::ConnectionPool>
+        - advanced_sequence::ConnectionPool
+        - advanced_sequence::encode_b64(std::string &&)
+  namespace_package:
+    type: package
+    glob:
+      - namespace_package.cpp
+    include:
+      namespaces:
+        - namespace_package
+    using_namespace: namespace_package
+  basic_include:
+    type: include
+    glob:
+      - src/include_diagram.cpp
+    generate_system_headers: true
+    relative_to: include_diagram
+    include:
+      paths:
+        - .
+  deduced_context:
+    type: class
+    glob:
+      - deduced_context.cpp
+    include:
+      namespaces:
+        - deduced_context
+    using_namespace: deduced_context
+    plantuml:
+      before:
+        - left to right direction
+  class_with_modules_packages:
+    type: class
+    glob:
+      - simple_app/simple_app.cpp
+    generate_packages: true
+    package_type: module
+    using_module: simple_app
+    using_namespace: simple_app
+    include:
+      paths:
+        - simple_app
+  class_with_namespace_packages:
+    type: class
+    glob:
+      - simple_app/simple_app.cpp
+    generate_packages: true
+    package_type: namespace
+    using_module: simple_app
+    include:
+      paths:
+        - simple_app
+  class_with_filesystem_packages:
+    type: class
+    glob:
+      - simple_app.cpp
+    generate_packages: true
+    package_type: directory
+    using_namespace: simple_app
+    relative_to: simple_app
+    include:
+      paths:
+        - .
