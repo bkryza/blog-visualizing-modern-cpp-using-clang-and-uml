@@ -3,7 +3,7 @@ output_directory: diagrams
 add_compile_flags:
   - -fparse-all-comments
 generate_links:
-  link: 'https://github.com/bkryza/blog-visualizing-cpp-using-uml/blob/{{ git.commit }}/{{ element.source.path }}#L{{ element.source.line }}'
+  link: 'https://github.com/bkryza/blog-visualizing-modern-cpp-using-clang-and-uml/blob/{{ git.commit }}/{{ element.source.path }}#L{{ element.source.line }}'
   tooltip: '{% if "comment" in element %}{{ abbrv(trim(replace(element.comment.formatted, "\n+", " ")), 256) }}{% else %}{{ element.name }}{% endif %}'
 plantuml:
   before:

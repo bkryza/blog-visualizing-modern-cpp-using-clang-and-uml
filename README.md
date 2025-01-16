@@ -2,7 +2,7 @@
 
 This repository contains sample code for my blog post:
 
-* [Visualizing modern C++ using Clang and UML](https://blog.bkryza.com/posts/generating-uml-diagrams-from-moderncpp-using-clang/#visualizing-component-dependencies)
+* [Visualizing modern C++ using Clang and UML](https://blog.bkryza.com/posts/generating-uml-diagrams-from-moderncpp-using-clang)
 
 # Running examples
 

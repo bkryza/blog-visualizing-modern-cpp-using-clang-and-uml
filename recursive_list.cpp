@@ -40,7 +40,7 @@ template <typename... T> HList(T...) -> HList<T...>;
 template <typename T>
 concept IsArithmetic = std::is_arithmetic_v<T>;
 
-template <double Seed, IsArithmetic... T> struct Arithmetic : HList<T...> {
+template <IsArithmetic... T> struct Arithmetic : HList<T...> {
 
     using HList<T...>::HList;
 
@@ -48,7 +48,7 @@ public:
     constexpr double sum() const { return sumImpl(*this); }
 
 private:
-    static constexpr double seed() { return Seed; }
+    static constexpr double seed() { return 100.0; }
 
     template <typename L> static constexpr double sumImpl(const L &list) {
         if constexpr (L::isEmpty()) {
@@ -60,7 +60,7 @@ private:
 };
 
 int tmain() {
-    constexpr Arithmetic<100.0, int, float, double> a{11, 12, 13};
+    constexpr Arithmetic<int, float, double> a{11, 12, 13};
 
     return a.sum();
 }
